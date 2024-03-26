@@ -36,3 +36,19 @@ sudo ./run_tests.sh -h
 # lub
 sudo ./run_tests.sh --help
 ```
+
+
+
+## Dodatkowe informacje
+
+Jeżeli kopiujemy pliki z Windows możliwe, że będzie trzeba wykonać dodatkową operację na skryptach testowych .sh polegającą na usunięciu znaków końca linii w stylu Windows (\r\n)
+
+```bash
+sed -i 's/\r$//' ./run_tests.sh
+
+# i
+
+for file in ./cis_deb_11_sec_audit_tests/*.sh; do
+  sed -i 's/\r$//' "$file"
+done
+```
