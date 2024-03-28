@@ -2,8 +2,8 @@
 
 # Ustawienie ścieżek do katalogów
 dir_path=$(dirname "$0")
-tests_dir="$dir_path/tests" # Ścieżka do katalogu z testami
-#tests_dir="$dir_path/cis_deb_11_sec_audit_tests" # katalog docelowy
+#tests_dir="$dir_path/tests" # Ścieżka do katalogu z testami
+tests_dir="$dir_path/cis_deb_11_sec_audit_tests" # katalog docelowy
 reports_dir="$dir_path/reports" # Ścieżka do katalogu z raportami
 
 # Opcje skryptu
@@ -63,6 +63,7 @@ separator="---------------------------------------------"
 # Wykonanie testów
 for test_script in "$tests_dir"/*.sh; do
     ((total_tests++))
+    test_script_name=$(basename "$test_script") # Zapisanie nazwy pliku skryptu
     test_output=$("$test_script" 2>&1)
     test_failed=$(echo "$test_output" | grep -q "FAIL;" && echo "yes" || echo "no")
     
@@ -72,16 +73,18 @@ for test_script in "$tests_dir"/*.sh; do
         ((passed_tests++))
     fi
     
+    test_result="Test: $test_script_name\n$test_output" # Dodanie nazwy pliku do wyniku
+    
     if [ -n "$output_file" ]; then
-        echo "$test_output" >> "$output_file"
+        echo -e "$test_result" >> "$output_file"
     fi
     
     if [ "$silent_mode" = false ]; then
         if [ "$show_fail_only" = true ] && [ "$test_failed" = "yes" ]; then
-            echo "$test_output"
+            echo -e "$test_result"
             echo "$separator"
         elif [ "$show_fail_only" = false ]; then
-            echo "$test_output"
+            echo -e "$test_result"
             echo "$separator"
         fi
     fi

@@ -8,7 +8,7 @@ exit_status=0
 
 # Sprawdzenie, czy gdm3 nie jest zainstalowany
 if dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' gdm3 2>/dev/null | grep -q "install ok installed"; then
-    test_fail_messages+=(" - Pakiet gdm3 jest zainstalowany.")
+    test_fail_messages+=("Pakiet gdm3 jest zainstalowany.")
     exit_status=1
 fi
 

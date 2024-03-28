@@ -6,18 +6,6 @@ test_fail_messages=() # Tablica na komunikaty o błędach
 
 exit_status=0
 
-# Sprawdzenie, czy GDM jest zainstalowany
-if ! command -v gdm &> /dev/null; then
-    echo "N/A;$test_id;$test_name;GDM nie jest zainstalowany."
-    exit 0
-fi
-
-# Sprawdzenie, czy GNOME jest używane
-if ! pgrep -x gnome-session &> /dev/null; then
-    echo "N/A;$test_id;$test_name;GNOME nie jest używane."
-    exit 0
-fi
-
 # Sprawdzenie ustawienia disable-user-list za pomocą gsettings lub dconf
 user_list_disabled=$(gsettings get org.gnome.login-screen disable-user-list 2>/dev/null)
 

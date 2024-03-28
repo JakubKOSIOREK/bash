@@ -9,16 +9,9 @@ exit_status=0
 # Definiowanie ścieżki do pliku konfiguracyjnego GDM
 gdm_conf="/etc/gdm3/greeter.dconf-defaults"
 
-# Sprawdzenie, czy plik istnieje
-if [ ! -f $gdm_conf ]; then
-    echo "N/A;$test_id;$test_name;"
-    exit 0
-fi
-
-
 # Sprawdzenie, czy plik konfiguracyjny GDM istnieje
 if [ ! -f "$gdm_conf" ]; then
-    test_fail_messages+=(" - Plik konfiguracyjny GDM $gdm_conf nie istnieje.")
+    test_fail_messages+=(" - Plik konfiguracyjny GDM ($gdm_conf) nie istnieje.")
     exit_status=1
 else
     # Sprawdzenie, czy /etc/issue.net zawiera niedozwolone informacje

@@ -9,12 +9,6 @@ expected_permissions="644"
 expected_owner="root"
 expected_group="root"
 
-# Sprawdzenie, czy plik /etc/motd istnieje
-if [ ! -f /etc/motd ]; then
-    echo "N/A;$test_id;$test_name;"
-    exit 0
-fi
-
 actual_permissions=$(stat -c "%a" $file)
 actual_owner=$(stat -c "%U" $file)
 actual_group=$(stat -c "%G" $file)

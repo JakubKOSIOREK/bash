@@ -6,12 +6,6 @@ test_fail_messages=() # Tablica na komunikaty o błędach
 
 exit_status=0
 
-# Sprawdzenie, czy plik /etc/issue.net istnieje
-if [ ! -f /etc/issue.net ]; then
-    echo "N/A;$test_id;$test_name;"
-    exit 0
-fi
-
 # Sprawdzenie, czy /etc/issue.net zawiera niedozwolone informacje
 os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2 | sed -e 's/"//g')
 
