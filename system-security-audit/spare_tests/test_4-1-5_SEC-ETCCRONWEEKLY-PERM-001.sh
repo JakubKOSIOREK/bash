@@ -1,7 +1,7 @@
 #!/bin/bash
 
 test_id="SEC-ETCCRONWEEKLY-PERM-001"
-file="/etc//cron.weekly"
+file="/etc/cron.weekly"
 test_name="Ensure permissions on $file are configured"
 test_fail_messages=() # Tablica na komunikaty o błędach
 

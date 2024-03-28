@@ -27,7 +27,7 @@ fi
 if [ $exit_status -eq 1 ]; then
     echo "FAIL;$test_id;$test_name;${test_fail_messages[*]}"
 else
-    echo "PASS;$test_id;$test_name; - Plik konfiguracyjny GDM ($gdm_conf) jest skonfigurowany poprawnie."
+    echo "PASS;$test_id;$test_name;"
 fi
 
 exit $exit_status

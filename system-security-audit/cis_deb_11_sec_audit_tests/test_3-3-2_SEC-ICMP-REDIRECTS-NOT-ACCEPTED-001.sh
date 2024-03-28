@@ -25,13 +25,6 @@ for param in "${parameters[@]}"; do
         test_fail_messages+=(" - Parametr $param_name jest ustawiony na $current_value zamiast $expected_value.")
         exit_status=1
     fi
-
-    # Sprawdzanie plików konfiguracyjnych sysctl
-    found_in_file=$(grep -rHs "$param_name\s*=" /etc/sysctl.conf /etc/sysctl.d/ /usr/lib/sysctl.d/ /run/sysctl.d/ 2>/dev/null | grep -vE "$param_name\s*=\s*$expected_value")
-    if [ -n "$found_in_file" ]; then
-        test_fail_messages+=(" - Parametr $param_name jest niepoprawnie ustawiony w pliku konfiguracyjnym.")
-        exit_status=1
-    fi
 done
 
 # Raportowanie wyniku

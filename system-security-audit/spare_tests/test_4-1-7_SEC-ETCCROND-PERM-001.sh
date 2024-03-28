@@ -1,7 +1,7 @@
 #!/bin/bash
 
 test_id="SEC-ETCCROND-PERM-001"
-file="/etc//cron.d"
+file="/etc/cron.d"
 test_name="Ensure permissions on $file are configured"
 test_fail_messages=() # Tablica na komunikaty o błędach
 

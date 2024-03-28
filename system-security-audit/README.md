@@ -52,3 +52,18 @@ for file in ./cis_deb_11_sec_audit_tests/*.sh; do
   sed -i 's/\r$//' "$file"
 done
 ```
+
+
+
+
+
+
+DO SPRAWDZENIA Z PLIKIEM
+
+Należy plik sysctl_custom_tzk.conf skopiować do katalogu /etc/sysctl.d
+```bash
+sudo cp ./tzk_szgdk_config_files/sysctl_custom_tzk.conf /etc/sysctl.d/sysctl_custom_tzk.conf
+```
+
+sudo sysctl -p
+sudo sysctl --system

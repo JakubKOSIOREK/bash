@@ -6,11 +6,21 @@ test_fail_messages=() # Tablica na komunikaty o błędach
 
 exit_status=0
 
-# Sprawdzenie, czy /etc/issue zawiera niedozwolone informacje
+# Definiowanie ścieżki do pliku
+file="/etc/issue"
+
+# Pobranie identyfikatora dystrybucji z /etc/os-release
 os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2 | sed -e 's/"//g')
 
-if grep -E -i -q "(\\\v|\\\r|\\\m|\\\s|$os_id)" /etc/issue &> /dev/null; then
-    test_fail_messages+=(" - Plik /etc/issue zawiera niedozwolone informacje o systemie.")
+# Sprawdzenie, czy plik $file istnieje
+if [ ! -f "$file" ]; then
+    echo "N/A;$test_id;$test_name; - Plik $file nie istnieje."
+    exit 0
+fi
+
+# Sprawdzenie, czy $file nie zawiera potencjalnie wrażliwych informacji
+if grep -Eis "(\\\v|\\\r|\\\m|\\\s|$os_id)" "$file" &> /dev/null; then
+    test_fail_messages+=(" - Plik $file może zawierać informacje o systemie.")
     exit_status=1
 fi
 
