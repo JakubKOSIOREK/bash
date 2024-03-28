@@ -18,7 +18,8 @@
 
 ## Uruchomienie
 
-Urzytkownik sudo nie wymagający hasła (ALL=(ALL) NOPASSWD: ALL)
+> **&#x2139; INFO:**
+ Można ustawić urzytkownika sudo nie wymagającego hasła w pliku (ALL=(ALL) NOPASSWD: ALL)
 
 W celu uruchomienia audytu należy uruchomić skrypt startowy ``run_tests.sh``
 
@@ -51,4 +52,9 @@ sed -i 's/\r$//' ./run_tests.sh
 for file in ./cis_deb_11_sec_audit_tests/*.sh; do
   sed -i 's/\r$//' "$file"
 done
+
+# lub
+
+find ./cis_deb_11_sec_audit_tests/ -type f -name "*.sh" -exec sed -i 's/\r$//' {} \;
+
 ```

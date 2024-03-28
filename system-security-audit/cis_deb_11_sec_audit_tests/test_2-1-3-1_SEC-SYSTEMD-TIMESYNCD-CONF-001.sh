@@ -16,11 +16,8 @@ fi
 ntp_config=$(find /etc/systemd -type f -name '*.conf' -exec grep -Ph '^\s*(NTP|FallbackNTP)=\S+' {} +)
 
 if [ -z "$ntp_config" ]; then
-    test_fail_messages+=("Brak konfiguracji NTP lub FallbackNTP.")
+    test_fail_messages+=(" - Brak konfiguracji NTP lub FallbackNTP.")
     exit_status=1
-else
-    echo "Znaleziono konfigurację NTP/FallbackNTP:"
-    echo "$ntp_config"
 fi
 
 # Raportowanie wyniku

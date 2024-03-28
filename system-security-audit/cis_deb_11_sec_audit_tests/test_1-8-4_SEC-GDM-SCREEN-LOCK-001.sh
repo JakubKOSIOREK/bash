@@ -8,7 +8,7 @@ exit_status=0
 
 # Sprawdzenie, czy gsettings jest dostępne
 if ! command -v gsettings &> /dev/null; then
-    echo "PASS;$test_id;$test_name; - gsettings nie znaleziono, pomijanie testu w środowisku bez GUI."
+    echo "N/A;$test_id;$test_name; - gsettings nie znaleziono, pomijanie testu w środowisku bez GUI."
     exit 0
 fi
 
@@ -34,7 +34,7 @@ fi
 if [ $exit_status -eq 1 ]; then
     echo "FAIL;$test_id;$test_name;${test_fail_messages[*]}"
 else
-    echo "PASS;$test_id;$test_name; - Konfiguracja blokady ekranu GDM jest prawidłowa."
+    echo "PASS;$test_id;$test_name;"
 fi
 
 exit $exit_status

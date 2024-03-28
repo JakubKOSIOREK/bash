@@ -9,6 +9,12 @@ exit_status=0
 # Pobranie identyfikatora dystrybucji z /etc/os-release
 os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2 | sed -e 's/"//g')
 
+# Sprawdzenie, czy plik /etc/motd istnieje
+if [ ! -f /etc/motd ]; then
+    echo "N/A;$test_id;$test_name;"
+    exit 0
+fi
+
 # Sprawdzenie, czy /etc/motd nie zawiera potencjalnie wrażliwych informacji
 if grep -Eis "(\\\v|\\\r|\\\m|\\\s|$os_id)" /etc/motd &> /dev/null; then
     test_fail_messages+=(" - Plik /etc/motd może zawierać informacje o systemie.")
