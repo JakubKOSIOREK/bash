@@ -9,11 +9,40 @@ exit_status=0
 # Lista pakietów do sprawdzenia - można dostosować do potrzeb
 packages_to_check="xserver-xorg*"
 
+# Biała lista pakietów, które mogą być zainstalowane
+allowed_packages=(
+    "xserver-xorg-core"
+    "xserver-xorg-driver-all"
+    "xserver-xorg-input-all"
+    "xserver-xorg-input-evtouch"
+    "xserver-xorg-input-libinput"
+    "xserver-xorg-input-wacom"
+    "xserver-xorg-legacy"
+    "xserver-xorg-video-all"
+    "xserver-xorg-video-amdgpu"
+    "xserver-xorg-video-ati"
+    "xserver-xorg-video-fbdev"
+    "xserver-xorg-video-intel"
+    "xserver-xorg-video-mach64"
+    "xserver-xorg-video-modesetting"
+    "xserver-xorg-video-nouveau"
+    "xserver-xorg-video-qxl"
+    "xserver-xorg-video-r128"
+    "xserver-xorg-video-radeon"
+    "xserver-xorg-video-vesa"
+    "xserver-xorg-video-vmware"
+)
+
 # Weryfikacja, czy żadne z pakietów nie są zainstalowane
 if dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' $packages_to_check 2>/dev/null | grep -Pi '\h+installed\b' >/dev/null; then
     installed_packages=$(dpkg-query -W -f='${binary:Package}\n' $packages_to_check 2>/dev/null | grep -v 'no packages found matching')
-    test_fail_messages+=(" - Znaleziono zainstalowane pakiety: $installed_packages")
-    exit_status=1
+
+    for package in $installed_packages; do
+        if ! [[ " ${allowed_packages[*]} " =~ " $package " ]]; then
+            test_fail_messages+=(" - Znaleziono zainstalowane pakiety nie znajdujące się na białej liście: $package")
+            exit_status=1
+        fi
+    done
 fi
 
 # Raportowanie wyniku

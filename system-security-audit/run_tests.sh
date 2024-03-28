@@ -2,8 +2,8 @@
 
 # Ustawienie ścieżek do katalogów
 dir_path=$(dirname "$0")
-#tests_dir="$dir_path/tests" # Ścieżka do katalogu z testami
-tests_dir="$dir_path/cis_deb_11_sec_audit_tests" # katalog docelowy
+tests_dir="$dir_path/tests" # Ścieżka do katalogu z testami
+#tests_dir="$dir_path/cis_deb_11_sec_audit_tests" # katalog docelowy
 reports_dir="$dir_path/reports" # Ścieżka do katalogu z raportami
 
 # Opcje skryptu
