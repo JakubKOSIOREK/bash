@@ -1,0 +1,2 @@
+# Monitorowanie udanych i nieudanych prób użycia polecenia setfacl
+-a always,exit -F path=/usr/bin/setfacl -F perm=x -F auid>=1000 -F auid!=unset -k perm_chng

@@ -1,0 +1,5 @@
+# Zasady monitorujące próby użycia polecenia chacl, zarówno udane, jak i nieudane.
+# Zasady mają na celu rejestrowanie prób zmiany list kontrol dostępu (ACL) za pomocą polecenia chacl
+# przez użytkowników o UID >= 1000 i nieustawionym (unset).
+
+-a always,exit -F path=/usr/bin/chacl -F perm=x -F auid>=1000 -F auid!=unset -k perm_chng

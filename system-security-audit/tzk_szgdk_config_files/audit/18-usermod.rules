@@ -1,0 +1,5 @@
+# Zasady monitorujące próby użycia polecenia usermod, zarówno udane, jak i nieudane.
+# Zasady mają na celu rejestrowanie prób modyfikacji użytkowników systemowych, 
+# co jest szczególnie ważne dla bezpieczeństwa i zarządzania systemem.
+
+-a always,exit -F path=/usr/sbin/usermod -F perm=x -F auid>=1000 -F auid!=unset -k usermod

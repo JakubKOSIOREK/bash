@@ -1,0 +1,5 @@
+# Zasady monitorujące modyfikacje modułów jądra, w tym ładowanie i usuwanie modułów, jak również użycie narzędzia kmod.
+# Monitorowanie tych akcji jest kluczowe dla bezpieczeństwa systemu, gdyż moduły jądra mogą bezpośrednio wpływać na funkcjonowanie systemu operacyjnego.
+
+-a always,exit -F arch=b64 -S init_module,finit_module,delete_module,create_module,query_module -F auid>=1000 -F auid!=unset -k kernel_modules
+-a always,exit -F path=/usr/bin/kmod -F perm=x -F auid>=1000 -F auid!=unset -k kernel_modules

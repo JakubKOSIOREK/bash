@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+repair_id="SEC-AUDIT-USER-EMUL-001"
+repair_name="Copy user emulation audit rules and load them"
+rules="02-user_emulation.rules"
+
+# Ustawienie ścieżki do katalogu ze skryptami
+dir_path=$(dirname "$0")
+scripts_dir="$(dirname "$dir_path")/tzk_szgdk_config_files"
+source_file="$scripts_dir/audit/$rules"
+
+destination_file="/etc/audit/rules.d/$rules"
+
+script_path="$0"
+repair_file=$(basename "$script_path")
+
+# Sprawdzenie, czy skrypt jest uruchamiany z uprawnieniami roota
+if [ "$(id -u)" -ne 0 ]; then
+    echo "ERROR;${repair_id};${repair_file};Skrypt musi być uruchomiony z uprawnieniami roota."
+    exit 1
+fi
+
+# Kopia pliku reguł
+cp "$source_file" "$destination_file"
+if [ $? -ne 0 ]; then
+    echo "ERROR;${repair_id};${repair_file};Nie udało się skopiować pliku reguł audytu dotyczącego emulacji użytkownika."
+    exit 1
+fi
+
+# Ponowne załadowanie reguł
+auditctl -R "$destination_file" &>/dev/null
+if [ $? -ne 0 ]; then
+    echo "ERROR;${repair_id};${repair_file};Nie udało się załadować reguł audytu dotyczących emulacji użytkownika."
+    exit 1
+fi
+
+echo "DONE;${repair_id};${repair_file};${repair_name};Reguły audytu dotyczące emulacji użytkownika zostały skopiowane i załadowane."
+exit 0
