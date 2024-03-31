@@ -102,13 +102,13 @@ for test_script in "${test_scripts[@]}"; do
     if [ "$test_failed" = "yes" ]; then
         ((failed_tests++))
         additional_info="${ADDR[4]}" # Pobranie dodatkowej informacji z outputu testu
-        console_output="${red}${status}${reset_color} >>> ${test_name}"
+        console_output="${red}${status}${reset_color} <<< ${test_name}"
         if [ "$verbose_mode" = true ]; then
             console_output+=" >>> $additional_info" # Dodanie informacji jeśli verbose jest aktywne
         fi
     else
         ((passed_tests++))
-        console_output="${green}${status}${reset_color} >>> ${test_name}"
+        console_output="${green}${status}${reset_color} <<< ${test_name}"
     fi
 
     if [ -n "$output_file" ]; then
