@@ -21,9 +21,6 @@ else
             test_fail_messages+=("Moduł $module_name nie jest zablokowany w /etc/modprobe.d/.")
             exit_status=1
         fi
-    else
-        test_fail_messages+=("Katalog /etc/modprobe.d/ nie istnieje lub jest pusty.")
-        exit_status=1
     fi
 fi
 

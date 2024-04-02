@@ -15,7 +15,7 @@ os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2 | sed -e 's/"//g')
 
 # Sprawdzenie, czy plik $file istnieje
 if [ ! -f "$file" ]; then
-    echo "N/A;${test_id};${test_file};${test_name}; - Plik $file nie istnieje."
+    echo "N/A ;${test_id};${test_file};${test_name}; - Plik $file nie istnieje."
     exit 0
 fi
 

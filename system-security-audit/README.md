@@ -8,8 +8,6 @@
 
    ```bash
    sudo chmod +x audit_deb_11.sh
-   
-   sudo chmod +x repair_deb_11.sh
    ```
 
 3. Należy sprawdzić, czy pliki testów .sh w folderach ``cis_deb_11_sec_audit_tests`` i ``cis_deb_11_sec_repair_tools`` mają prawa do wykonania ('x'). Jeżeli nie to należy im je nadać komendą:
@@ -57,32 +55,12 @@ done
 
 ## Konfiguracja ustawień systemu w przypadku gdy test zwróci `FAIL`
 
-W katalogu ``cis_deb_11_sec_repair_tools`` znajdują się skrypty mające za zadanie zaimplementowanie zmian zgodnych z wytycznymi. Jeden skrypt naprawczy odpowiada jednemu testowi. Aby uruchomić naprawę należy użyć komendy:
+W katalogu ``cis_deb_11_sec_repair_tools`` znajdują się skrypty mające za zadanie zaimplementowanie zmian zgodnych z wytycznymi.
 
-```bash
-sudo ./repair_deb_11.sh [numer_testu]
-```
-
-Przykład:
-
-Test zwrócił wynik: `TC_4-1-3-17_SEC-AUDIT-CHACL-COMMAND-USE-RECORDED-001.sh >>> FAIL >>> Brak oczekiwanej reguły audytu dla polecenia chacl.`
-
-Aby dodać brakujące regyły należy użyć komendy:
-
-```bash
-sudo ./repair_deb_11.sh 4-1-3-17
-```
-
-co spowoduje wykonanie skryptu naprawczego `RT_4-1-3-17_SEC-AUDIT-CHACL-COMMAND-USE-RECORDED-001.sh`
-
-> **&#x2139; INFO:**
- Można podać kilka numerów testów w jednej lini oddzielonych od siebie spacją
- ```bash
- sudo ./repair_deb_11.sh 4-1-3-17 4-1-3-18 ...
- ```
 
 > **&#x26A0; UWAGA:**\
- Przed wykonaniem skryptu naprawczego ``RT_4-1-3-20_SEC-AUDIT-CONFIG-IMMUTABLE-001.sh`` należy się upewnić, że wszystkie reguły audytu są zaimplementowane !
+ Przed wykonaniem skryptu naprawczego ``02_repair_audit_deb_11.sh`` należy się upewnić, że wszystkie reguły audytu są zaimplementowane !
+
 
 > **&#x26A0; UWAGA:**\
  Po wykonaniu wszystkich napraw należy wykonać restart systemu i ponowny audyt z opcją zapisu do pliku `.csv`

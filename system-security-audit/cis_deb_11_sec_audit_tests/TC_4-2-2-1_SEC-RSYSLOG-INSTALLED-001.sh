@@ -9,7 +9,7 @@ test_fail_messages=() # Komunikaty o błędach
 exit_status=0
 
 # Sprawdzenie, czy pakiet rsyslog jest zainstalowany
-if ! dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' rsyslog | grep -q "install ok installed"; then
+if ! dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' rsyslog 2>/dev/null| grep -q "install ok installed"; then
     test_fail_messages+=("Pakiet rsyslog nie jest zainstalowany.")
     exit_status=1
 fi

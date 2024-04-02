@@ -26,8 +26,6 @@ if [ $exit_status -ne 0 ]; then
     test_fail_message=$(IFS=';'; echo "${test_fail_messages[*]}")
     echo "FAIL;${test_id};${test_file};${test_name};$test_fail_message"
 else
-    echo "Znaleziono konfigurację NTP/FallbackNTP:"
-    echo "$ntp_config"
     echo "PASS;${test_id};${test_file};${test_name};"
 fi
 

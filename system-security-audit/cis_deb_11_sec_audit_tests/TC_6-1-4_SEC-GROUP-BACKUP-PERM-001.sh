@@ -5,7 +5,7 @@ file="/etc/group-"
 test_name="Ensure permissions on $file are configured"
 test_fail_messages=() # Tablica na komunikaty o błędach
 
-expected_permissions="600"
+expected_permissions="644"
 expected_owner="root"
 expected_group="root"
 

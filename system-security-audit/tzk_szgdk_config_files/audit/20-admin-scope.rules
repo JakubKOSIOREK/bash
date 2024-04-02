@@ -1,0 +1,5 @@
+# Obserwowanie zmian w pliku /etc/sudoers
+-w /etc/sudoers -p wa -k scope
+
+# Obserwowanie zmian w katalogu /etc/sudoers.d
+-w /etc/sudoers.d -p wa -k scope

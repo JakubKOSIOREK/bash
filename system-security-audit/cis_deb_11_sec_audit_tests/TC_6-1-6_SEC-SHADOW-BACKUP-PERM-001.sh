@@ -7,7 +7,7 @@ test_fail_messages=() # Tablica na komunikaty o błędach
 
 expected_permissions="600"
 expected_owner="root"
-expected_group="shadow"
+expected_group="root"
 
 script_path="$0"
 test_file=$(basename "$script_path")
