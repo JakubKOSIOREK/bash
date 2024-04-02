@@ -9,7 +9,7 @@ exit_status=0
 
 # Sprawdzenie, czy ntp jest używany na systemie
 if ! systemctl is-enabled ntp &> /dev/null && ! systemctl is-enabled ntpd &> /dev/null; then
-    echo "N/A;${test_id};${test_name};'ntp/ntpd' nie jest włączony."
+    echo "N/A ;${test_id};${test_file};${test_name};'ntp/ntpd' nie jest włączony."
     exit 0
 fi
 

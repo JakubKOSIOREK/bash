@@ -7,9 +7,9 @@
 2. Należy sprawdzić pliki ``tests.sh`` i ``repair.sh`` czy posiadają prawa do wykonywania ('x'). Jeżeli nie to należy im je nadać komedą:
 
    ```bash
-   sudo chmod +x tests.sh
+   sudo chmod +x audit_deb_11.sh
    
-   sudo chmod +x repair.sh
+   sudo chmod +x repair_deb_11.sh
    ```
 
 3. Należy sprawdzić, czy pliki testów .sh w folderach ``cis_deb_11_sec_audit_tests`` i ``cis_deb_11_sec_repair_tools`` mają prawa do wykonania ('x'). Jeżeli nie to należy im je nadać komendą:
@@ -27,7 +27,7 @@ Urzytkownik sudo nie wymagający hasła `ALL=(ALL) NOPASSWD: ALL`
 W celu uruchomienia audytu należy uruchomić skrypt startowy ``tests.sh``
 
 ```bash
-sudo ./tests.sh
+sudo ./audit_deb_11.sh
 ```
 
 > **&#x2139; INFO:**
@@ -36,9 +36,9 @@ sudo ./tests.sh
 Po więcej informacji dotyczących audytu należy użyć komendy:
 
 ```bash
-sudo ./tests.sh -h
+sudo ./audit_deb_11.sh -h
 # lub
-sudo ./tests.sh --help
+sudo ./audit_deb_11.sh --help
 ```
 
 ## Dodatkowe informacje
@@ -46,7 +46,7 @@ sudo ./tests.sh --help
 Jeżeli kopiujemy pliki z Windows możliwe, że będzie trzeba wykonać dodatkową operację na skryptach testowych .sh polegającą na usunięciu znaków końca linii w stylu Windows (\r\n)
 
 ```bash
-sed -i 's/\r$//' ./tests.sh
+sed -i 's/\r$//' ./audit_deb_11.sh
 
 # i
 
@@ -60,7 +60,7 @@ done
 W katalogu ``cis_deb_11_sec_repair_tools`` znajdują się skrypty mające za zadanie zaimplementowanie zmian zgodnych z wytycznymi. Jeden skrypt naprawczy odpowiada jednemu testowi. Aby uruchomić naprawę należy użyć komendy:
 
 ```bash
-sudo ./repair.sh [numer_testu]
+sudo ./repair_deb_11.sh [numer_testu]
 ```
 
 Przykład:
@@ -70,7 +70,7 @@ Test zwrócił wynik: `TC_4-1-3-17_SEC-AUDIT-CHACL-COMMAND-USE-RECORDED-001.sh >
 Aby dodać brakujące regyły należy użyć komendy:
 
 ```bash
-sudo ./repair.sh 4-1-3-17
+sudo ./repair_deb_11.sh 4-1-3-17
 ```
 
 co spowoduje wykonanie skryptu naprawczego `RT_4-1-3-17_SEC-AUDIT-CHACL-COMMAND-USE-RECORDED-001.sh`
@@ -78,19 +78,15 @@ co spowoduje wykonanie skryptu naprawczego `RT_4-1-3-17_SEC-AUDIT-CHACL-COMMAND-
 > **&#x2139; INFO:**
  Można podać kilka numerów testów w jednej lini oddzielonych od siebie spacją
  ```bash
- sudo ./repair.sh 4-1-3-17 4-1-3-18 ...
+ sudo ./repair_deb_11.sh 4-1-3-17 4-1-3-18 ...
  ```
 
-> **&#x26A0;; UWAGA:**\
+> **&#x26A0; UWAGA:**\
  Przed wykonaniem skryptu naprawczego ``RT_4-1-3-20_SEC-AUDIT-CONFIG-IMMUTABLE-001.sh`` należy się upewnić, że wszystkie reguły audytu są zaimplementowane !
 
-> **&#x26A0;; UWAGA:**\
+> **&#x26A0; UWAGA:**\
  Po wykonaniu wszystkich napraw należy wykonać restart systemu i ponowny audyt z opcją zapisu do pliku `.csv`
 > ```bash
-> sudo ./tests.sh -r
+> sudo ./audit_deb_11.sh -r
 > ```
-
-
-
-
 

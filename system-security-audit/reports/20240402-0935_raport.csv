@@ -1,0 +1,4 @@
+Status;Test ID;File Name;Test Title;Additional Info
+PASS;SEC-UNOWNED-FILES-DIRS-001;TC_6-1-10_SEC-NO-UNOWNED-FILES-OR-DIRS-001.sh;Ensure no unowned files or directories exist;
+PASS;SEC-NO-UNGROUPED-FILES-OR-DIRS-001;TC_6-1-11_SEC-NO-UNGROUPED-FILES-OR-DIRS-001.sh;Ensure no ungrouped files or directories exist;
+FAIL;SEC-SUID-EXECUTABLES-001;TC_6-1-12_SEC-AUDIT-SUID-EXECUTABLES-001.sh;Audit SUID executables;/usr/lib/dbus-1.0/dbus-daemon-launch-helper;/usr/lib/openssh/ssh-keysign;/usr/bin/gpasswd;/usr/bin/su;/usr/bin/chsh;/usr/bin/mount;/usr/bin/newgrp;/usr/bin/sudo;/usr/bin/chfn;/usr/bin/umount

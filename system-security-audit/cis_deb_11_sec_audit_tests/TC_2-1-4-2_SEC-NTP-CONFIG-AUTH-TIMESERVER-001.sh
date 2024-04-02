@@ -12,7 +12,7 @@ ntp_conf="/etc/ntp.conf"
 
 # Sprawdzenie, czy ntp jest używany na systemie
 if [ ! -f "$ntp_conf" ]; then
-    echo "N/A ;${test_id};${test_name};'ntp' nie jest zainstalowany."
+    echo "N/A ;${test_id};${test_file};${test_name};'ntp' nie jest zainstalowany."
     exit 0
 fi
 
