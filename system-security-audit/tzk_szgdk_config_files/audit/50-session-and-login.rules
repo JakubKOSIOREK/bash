@@ -1,8 +1,0 @@
-# Zasady monitorowania informacji o inicjacji sesji
--w /var/run/utmp -p wa -k session
--w /var/log/wtmp -p wa -k session
--w /var/log/btmp -p wa -k session
-
-# Zasady monitorowania logowań
--w /var/log/lastlog -p wa -k logins
--w /var/run/faillock -p wa -k logins

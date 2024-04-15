@@ -20,8 +20,8 @@ else
 
     # Definicja oczekiwanych elementów reguł jako wzorców
     expected_rules_patterns=(
-        "-a always,exit -F arch=b64 -S adjtimex,settimeofday,clock_settime -F key=time-change"
-        "-a always,exit -F arch=b32 -S settimeofday,adjtimex,clock_settime -F key=time-change"
+        "-a always,exit -F arch=b64 -S adjtimex,settimeofday,clock_settime -F key=time_change"
+        "-a always,exit -F arch=b32 -S settimeofday,adjtimex,clock_settime -F key=time_change"
         "-w /etc/localtime -p wa -k time-change"
     )
 

@@ -10,11 +10,9 @@ test_file=$(basename "$script_path")
 test_fail_messages=() # Tablica na komunikaty o błędach
 exit_status=0
 
-# Wyszukiwanie konfiguracji GRUB2 dla wierszy 'linux', które nie zawierają 'audit_backlog_limit' z wartością liczbową
-audit_backlog_limit_missing=$(find /boot -type f -name 'grub.cfg' -exec grep -Ph -- '^\s*linux' {} + | grep -Pv 'audit_backlog_limit=\d+\b')
-
-if [[ -n "$audit_backlog_limit_missing" ]]; then
-    test_fail_messages+=("Nie znaleziono odpowiedniej wartości 'audit_backlog_limit' w konfiguracji GRUB2 dla wierszy 'linux'.")
+# Wyszukiwanie konfiguracji GRUB2 w 'GRUB_CMDLINE_LINUX' i 'GRUB_CMDLINE_LINUX_DEFAULT', które nie zawierają 'audit_backlog_limit' z wartością liczbową
+if ! grep -Eq '^(GRUB_CMDLINE_LINUX|GRUB_CMDLINE_LINUX_DEFAULT)=".*audit_backlog_limit=[0-9]+.*"' "$file_name"; then
+    test_fail_messages+=("Nie znaleziono odpowiedniej wartości 'audit_backlog_limit' w konfiguracji GRUB2.")
     exit_status=1
 fi
 

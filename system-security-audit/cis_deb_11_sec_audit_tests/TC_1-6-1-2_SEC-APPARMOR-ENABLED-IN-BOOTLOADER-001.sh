@@ -8,16 +8,17 @@ test_fail_messages=() # Tablica na komunikaty o błędach
 exit_status=0
 
 # Sprawdzenie parametrów apparmor=1 w konfiguracji GRUB
-if grep -q "^\s*linux" /boot/grub/grub.cfg | grep -v "apparmor=1" &> /dev/null; then
+if grep -q "^\s*linux" /boot/grub/grub.cfg && ! grep -q "apparmor=1" /boot/grub/grub.cfg; then
     test_fail_messages+=("Brak parametru 'apparmor=1' w niektórych wpisach GRUB.")
     exit_status=1
 fi
 
 # Sprawdzenie parametrów security=apparmor w konfiguracji GRUB
-if grep -q "^\s*linux" /boot/grub/grub.cfg | grep -v "security=apparmor" &> /dev/null; then
+if grep -q "^\s*linux" /boot/grub/grub.cfg && ! grep -q "security=apparmor" /boot/grub/grub.cfg; then
     test_fail_messages+=("Brak parametru 'security=apparmor' w niektórych wpisach GRUB.")
     exit_status=1
 fi
+
 
 # Tworzenie jednego komunikatu o błędzie
 test_fail_message=$(IFS=';'; echo "${test_fail_messages[*]}")

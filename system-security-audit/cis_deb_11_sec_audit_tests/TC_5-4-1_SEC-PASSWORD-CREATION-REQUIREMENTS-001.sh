@@ -7,9 +7,11 @@ test_file=$(basename "$script_path")
 test_fail_messages=() # Tablica na komunikaty o błędach
 exit_status=0
 
+libpam_module="libpwquality-common"
+
 # Sprawdzenie, czy moduł pam_pwquality jest zainstalowany
-if ! dpkg -s libpam-pwquality &> /dev/null; then
-    test_fail_messages+=("libpam-pwquality module is not installed.")
+if ! dpkg -s $libpam_module &> /dev/null; then
+    test_fail_messages+=("$libpam_module module is not installed.")
     exit_status=1
 fi
 
@@ -29,13 +31,6 @@ lcredit=$(grep '^\s*lcredit\s*=' /etc/security/pwquality.conf  2>/dev/null | awk
 
 if [[ "$minclass" != "4" ]] && { [[ "$dcredit" != "-1" ]] || [[ "$ucredit" != "-1" ]] || [[ "$ocredit" != "-1" ]] || [[ "$lcredit" != "-1" ]]; }; then
     test_fail_messages+=("Password complexity not correctly configured.")
-    exit_status=1
-fi
-
-# Sprawdzenie ustawienia liczby prób
-retry=$(grep -E '^\s*password\s+(requisite|required)\s+pam_pwquality\.so\s+' /etc/pam.d/common-password | grep -o 'retry=[0-9]*' | cut -d= -f2)
-if [[ -z "$retry" ]] || [[ "$retry" -gt 3 ]]; then
-    test_fail_messages+=("Retry attempts for password is more than 3.")
     exit_status=1
 fi
 

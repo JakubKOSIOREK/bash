@@ -18,7 +18,7 @@ if [ -n "$audit_config_files" ]; then
         # Sprawdzenie uprawnień dla każdego pliku konfiguracyjnego
         file_permissions=$(stat -Lc "%a" "$config_file")
         # Sprawdzenie, czy uprawnienia są 640 lub bardziej restrykcyjne
-        if ! echo "$file_permissions" | grep -Pq -- '^\h*\H+\h*([0,2,4,6][0,4]0)\h*$'; then
+        if ! echo "$file_permissions" | grep -Eq '^(640|600|400|000)$'; then
             test_fail_messages+=("Plik konfiguracyjny audytu $config_file nie ma uprawnień 640 lub bardziej restrykcyjnych.")
             exit_status=1
         fi

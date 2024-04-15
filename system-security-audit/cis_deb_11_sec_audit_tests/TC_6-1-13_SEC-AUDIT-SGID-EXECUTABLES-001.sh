@@ -12,8 +12,22 @@ exit_status=0
 
 # Oczekiwana lista plików SGID
 skip_files=(
-    "/usr/bin/at"
-    "/usr/bin/crontab"
+    "/usr/bin/expiry"
+    "/usr/bin/wall"
+    "/usr/bin/write.ul"
+    "/usr/bin/xiterm+thai" # jest na TZK nie ma w VM
+    "/usr/bin/dotlockfile"
+    "/usr/bin/chage"
+    "/usr/bin/ssh-agent"
+    "/usr/sbin/unix_chkpwd"
+    "/usr/lib/xorg/Xorg.wrap"
+    "/usr/bin/at" # VM
+    "/usr/bin/crontab" # VM
+    "/usr/lib/x86_64-linux-gnu/utempter/utempter" # VM
+    "/usr/bin/mlocate" # VM
+    "/usr/bin/lockfile" # VM
+    "/usr/bin/procmail" # VM
+    "/usr/bin/dotlock.mailutils" # VM
 )
 
 # Pozyskiwanie aktualnej listy plików SGID

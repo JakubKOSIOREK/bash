@@ -15,7 +15,7 @@ gdm_config_file="/etc/gdm3/custom.conf"
 
 # Sprawdzenie, czy GDM jest zainstalowany
 if [ ! -f "$gdm_config_file" ]; then
-    echo "PASS;$test_id;$test_file;$test_name; - GDM nie jest zainstalowany."
+    echo "N/A ;$test_id;$test_file;$test_name; - GDM nie jest zainstalowany."
     exit 0
 fi
 

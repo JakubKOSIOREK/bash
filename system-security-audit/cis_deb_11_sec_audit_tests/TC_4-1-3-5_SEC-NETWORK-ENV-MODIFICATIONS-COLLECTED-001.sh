@@ -17,13 +17,13 @@ else
 
     # Definicja oczekiwanych reguł jako wzorców
     expected_rules_patterns=(
-        "-a always,exit -F arch=b64 -S sethostname,setdomainname -F key=system-locale"
-        "-a always,exit -F arch=b32 -S sethostname,setdomainname -F key=system-locale"
-        "-w /etc/issue -p wa -k system-locale"
-        "-w /etc/issue.net -p wa -k system-locale"
-        "-w /etc/hosts -p wa -k system-locale"
-        "-w /etc/networks -p wa -k system-locale"
-        "-w /etc/network -p wa -k system-locale"
+        "-a always,exit -F arch=b64 -S sethostname,setdomainname -F key=system_locale"
+        "-a always,exit -F arch=b32 -S sethostname,setdomainname -F key=system_locale"
+        "-w /etc/issue -p wa -k system_locale"
+        "-w /etc/issue.net -p wa -k system_locale"
+        "-w /etc/hosts -p wa -k system_locale"
+        "-w /etc/networks -p wa -k system_locale"
+        "-w /etc/network -p wa -k system_locale"
     )
 
     # Funkcja do sprawdzania obecności reguły

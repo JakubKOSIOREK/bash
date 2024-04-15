@@ -10,9 +10,9 @@ test_file=$(basename "$script_path")
 test_fail_messages=() # Tablica na komunikaty o błędach
 exit_status=0
 
-# Sprawdzenie konfiguracji GRUB2 dla 'GRUB_CMDLINE_LINUX', które nie zawierają 'audit=1'
-if find /boot -type f -name 'grub.cfg' -exec grep -Ph -- '^\s*linux' {} + | grep -qv 'audit=1'; then
-    test_fail_messages+=("Nie znaleziono 'audit=1' w konfiguracji GRUB_CMDLINE_LINUX.")
+# Sprawdzenie konfiguracji GRUB2 dla 'GRUB_CMDLINE_LINUX' i 'GRUB_CMDLINE_LINUX_DEFAULT', które nie zawierają 'audit=1'
+if ! grep -Eq '^(GRUB_CMDLINE_LINUX|GRUB_CMDLINE_LINUX_DEFAULT)=".*audit=1.*"' "$file_name"; then
+    test_fail_messages+=("Nie znaleziono 'audit=1' w konfiguracji GRUB_CMDLINE_LINUX lub GRUB_CMDLINE_LINUX_DEFAULT.")
     exit_status=1
 fi
 

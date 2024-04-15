@@ -1,5 +1,0 @@
-# Zapewnia, że zasady audytu są niezmienne (immute) po uruchomieniu systemu.
-# Po włączeniu tej opcji, zasady nie mogą być zmienione bez restartu.
-# To zwiększa bezpieczeństwo systemu audytu, zapobiegając manipulacji zasadami w czasie rzeczywistym.
-
--e 2

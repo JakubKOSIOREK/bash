@@ -23,7 +23,7 @@ test_fail_message=$(IFS='; '; echo "${test_fail_messages[*]}")
 
 # Raportowanie wyniku
 if [ $exit_status -eq 0 ]; then
-    echo "PASS;$test_id;$test_file;$test_name; - Niestandardowy plik logowania sudo jest prawidłowo skonfigurowany."
+    echo "PASS;$test_id;$test_file;$test_name;"
 else
     echo "FAIL;$test_id;$test_file;$test_name;$test_fail_message"
 fi

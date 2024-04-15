@@ -10,11 +10,29 @@ test_file=$(basename "$script_path")
 test_fail_messages=() # Tablica na komunikaty o błędach
 exit_status=0
 
-# Wyszukiwanie dyrektyw NOPASSWD w plikach sudoers
-nopasswd_entries=$(grep -rP "^[^#]*\bNOPASSWD\b" /etc/sudoers /etc/sudoers.d)
+# Lista wykluczeń
+exclusions=(
+    "/sbin/hwclock"
+    "/sbin/hwclock --systohc"
+    "/dev/rtc0"
+    "/bin/date"
+    "/bin/date -s"
+    "/usr/bin/timedatectl"
+    "/usr/bin/timedatectl set-timezone"
+)
+
+# Przekształcanie listy wykluczeń na wzorzec wyrażenia regularnego
+exclusions_pattern=$(IFS='|'; echo "${exclusions[*]}")
+exclusions_pattern="(${exclusions_pattern//\//\\/})" # Zastąpienie '/' na '\/' dla poprawnej interpretacji ścieżek
+
+# Wyszukiwanie dyrektyw NOPASSWD niezawierających wykluczeń
+nopasswd_entries=$(grep -rP "^[^#]*\bNOPASSWD\b" /etc/sudoers /etc/sudoers.d | grep -vP "$exclusions_pattern" | tr '\n' ';')
+
+# Usuwanie ostatniego średnika
+nopasswd_entries=${nopasswd_entries%;}
 
 if [[ -n "$nopasswd_entries" ]]; then
-    test_fail_messages+=("- Znaleziono konfiguracje NOPASSWD w plikach sudoers: $nopasswd_entries")
+    test_fail_messages+=("$nopasswd_entries")
     exit_status=1
 fi
 

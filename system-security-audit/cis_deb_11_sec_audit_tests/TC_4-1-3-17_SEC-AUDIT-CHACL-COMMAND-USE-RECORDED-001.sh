@@ -13,29 +13,29 @@ if ! command -v auditctl &> /dev/null; then
     exit_status=1
 else
     # Załadowanie reguł do zmiennej
-    loaded_rules=$(sudo auditctl -l)
+    loaded_rules=$(sudo /usr/sbin/auditctl -l)
 
-    # Pobranie minimalnego UID użytkownika
-    UID_MIN=$(awk '/^\s*UID_MIN/{print $2}' /etc/login.defs)
-    if [ -z "${UID_MIN}" ]; then
-        test_fail_messages+=("Nie można ustalić UID_MIN z /etc/login.defs.")
-        exit_status=1
-    else
-        # Szukamy w załadowanych regułach linii zawierających ścieżkę do chacl oraz klucz perm_chng
-        # Nie zakładamy dokładnej kolejności fragmentów reguły
-        chacl_rule_pattern="/usr/bin/chacl.*perm=x.*auid>=${UID_MIN}.*auid!=-1.*key=perm_chng"
-        if ! echo "$loaded_rules" | grep -Pq -- "$chacl_rule_pattern"; then
-            test_fail_messages+=("Brak oczekiwanej reguły audytu dla polecenia chacl.")
+    # Definicja oczekiwanej reguły
+    declare -a expected_rules=(
+        "-a always,exit -S all -F path=/usr/bin/chacl -F perm=x -F auid>=1000 -F auid!=-1 -F key=priv_cmd"
+    )
+
+    # Sprawdzanie obecności oczekiwanych reguł
+    for rule in "${expected_rules[@]}"; do
+        if ! echo "$loaded_rules" | grep -Fxq -- "$rule"; then
+            test_fail_messages+=("Oczekiwana reguła audytu nie jest załadowana: $rule")
             exit_status=1
         fi
-    fi
+    done
 fi
+
+# Połączenie komunikatów o błędach w jedną linię
+test_fail_message=$(IFS='; '; echo "${test_fail_messages[*]}")
 
 # Raportowanie wyniku
 if [ $exit_status -eq 0 ]; then
     echo "PASS;${test_id};${test_file};${test_name};"
 else
-    test_fail_message=$(IFS=';'; echo "${test_fail_messages[*]}")
     echo "FAIL;${test_id};${test_file};${test_name};$test_fail_message"
 fi
 

@@ -21,10 +21,10 @@ if [ -f /etc/audit/auditd.conf ]; then
         echo "FAIL;$test_id;$test_file;$script_path;$test_name;Niektóre pliki dziennika audytu nie są własnością użytkownika root.;$test_fail_message"
         exit_status=1
     else
-        echo "PASS;$test_id;$test_file;$script_path;$test_name;"
+        echo "PASS;$test_id;$test_file;$test_name;"
     fi
 else
-    echo "FAIL;$test_id;$test_file;$script_path;$test_name; - Plik /etc/audit/auditd.conf nie istnieje."
+    echo "FAIL;$test_id;$test_file;$test_name; - Plik /etc/audit/auditd.conf nie istnieje."
     exit_status=1
 fi
 

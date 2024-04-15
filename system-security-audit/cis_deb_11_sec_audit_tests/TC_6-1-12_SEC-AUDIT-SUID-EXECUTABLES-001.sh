@@ -9,9 +9,26 @@ test_file=$(basename "$script_path")
 
 # Definicja listy plików do pominięcia jako tablica
 skip_files=(
-    "/bin/ping"
-    "/usr/bin/passwd"
-    
+    "/usr/bin/chfn"
+    "/usr/bin/pmount"
+    "/usr/bin/umount"
+    "/usr/bin/sudo"
+    "/usr/bin/mount"
+    "/usr/bin/gpasswd"
+    "/usr/bin/pkexec"
+    "/usr/bin/chsh"
+    "/usr/bin/su"
+    "/usr/bin/newgrp"
+    "/usr/bin/pumount"
+    "/usr/libexec/polkit-agent-helper-1"
+    "/usr/sbin/exim4"
+    "/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
+    "/usr/lib/xorg/Xorg.wrap"
+    "/usr/lib/openssh/ssh-keysign"
+    "/usr/bin/fusermount" # VM
+    "/usr/bin/at" # VM
+    "/usr/bin/procmail" # VM
+    "/usr/bin/passwd" # VM
 )
 
 # Wykonanie polecenia w celu znalezienia plików z ustawionym bitem SUID

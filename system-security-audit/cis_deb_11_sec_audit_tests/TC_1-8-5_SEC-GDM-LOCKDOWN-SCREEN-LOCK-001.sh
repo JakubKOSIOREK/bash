@@ -11,7 +11,7 @@ lockdown_directory="/etc/dconf/db/local.d/locks"
 
 # Sprawdzenie, czy GDM jest zainstalowany
 if ! dpkg -l gdm gdm3 &> /dev/null; then
-    echo "PASS;${test_id};${test_file};${test_name}; - GDM nie jest zainstalowany."
+    echo "N/A ;${test_id};${test_file};${test_name}; - GDM nie jest zainstalowany."
     exit 0
 fi
 

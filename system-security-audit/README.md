@@ -10,14 +10,6 @@
    sudo chmod +x audit_deb_11.sh
    ```
 
-3. Należy sprawdzić, czy pliki testów .sh w folderach ``cis_deb_11_sec_audit_tests`` i ``cis_deb_11_sec_repair_tools`` mają prawa do wykonania ('x'). Jeżeli nie to należy im je nadać komendą:
-
-   ```bash
-   sudo find ./cis_deb_11_sec_audit_tests -type f -name "*.sh" -exec chmod +x {} +
-
-   sudo find ./cis_deb_11_sec_repair_tools -type f -name "*.sh" -exec chmod +x {} +
-   ```
-
 ## Uruchomienie
 
 Urzytkownik sudo nie wymagający hasła `ALL=(ALL) NOPASSWD: ALL`
@@ -48,9 +40,7 @@ sed -i 's/\r$//' ./audit_deb_11.sh
 
 # i
 
-for file in ./cis_deb_11_sec_audit_tests/*.sh; do
-  sed -i 's/\r$//' "$file"
-done
+for file in ./cis_deb_11_sec_audit_tests/*.sh; do   sed -i 's/\r$//' "$file"; done
 ```
 
 ## Konfiguracja ustawień systemu w przypadku gdy test zwróci `FAIL`
@@ -68,3 +58,7 @@ W katalogu ``cis_deb_11_sec_repair_tools`` znajdują się skrypty mające za zad
 > sudo ./audit_deb_11.sh -r
 > ```
 
+
+
+
+rozważyć stworzenie jednego pliku TZK_netipv4_sysctl.conf z parametrami wg cis

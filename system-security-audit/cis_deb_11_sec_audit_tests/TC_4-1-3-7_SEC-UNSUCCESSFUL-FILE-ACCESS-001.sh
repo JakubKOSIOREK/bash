@@ -15,18 +15,20 @@ else
     # Załadowanie reguł do zmiennej
     loaded_rules=$(sudo /usr/sbin/auditctl -l)
 
-    # Sprawdzanie obecności oczekiwanych reguł
-    syscalls="open|truncate|ftruncate|creat|openat"
-    conditions="-F exit=-EACCES -F auid>=1000 -F auid!=-1 -F key=access|-F exit=-EPERM -F auid>=1000 -F auid!=-1 -F key=access"
-    archs="b64|b32"
+    # Definicja oczekiwanych reguł
+    declare -a expected_rules=(
+        "-a always,exit -F arch=b64 -S open,truncate,ftruncate,creat,openat -F exit=-EACCES -F auid>=1000 -F auid!=-1 -F key=access"
+        "-a always,exit -F arch=b64 -S open,truncate,ftruncate,creat,openat -F exit=-EPERM -F auid>=1000 -F auid!=-1 -F key=access"
+        "-a always,exit -F arch=b32 -S open,creat,truncate,ftruncate,openat -F exit=-EACCES -F auid>=1000 -F auid!=-1 -F key=access"
+        "-a always,exit -F arch=b32 -S open,creat,truncate,ftruncate,openat -F exit=-EPERM -F auid>=1000 -F auid!=-1 -F key=access"
+    )
 
-    for arch in $archs; do
-        for condition in $conditions; do
-            if ! echo "$loaded_rules" | grep -Eq -e "-a always,exit -F arch=$arch -S .*($syscalls).* ($condition)"; then
-                test_fail_messages+=("Oczekiwana reguła audytu dla arch=$arch z warunkami $condition nie jest załadowana")
-                exit_status=1
-            fi
-        done
+    # Sprawdzanie obecności oczekiwanych reguł
+    for rule in "${expected_rules[@]}"; do
+        if ! echo "$loaded_rules" | grep -Fxq -- "$rule"; then
+            test_fail_messages+=("Oczekiwana reguła audytu nie jest załadowana: $rule")
+            exit_status=1
+        fi
     done
 fi
 

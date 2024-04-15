@@ -10,11 +10,11 @@ exit_status=0
 UID_MIN=$(awk '/^\s*UID_MIN/{print $2}' /etc/login.defs)
 
 # Lista kont wyłączonych z kontroli (root, sync, shutdown, halt są dozwolone)
-excluded_accounts="root sync shutdown halt"
+excluded_accounts="root|sync|shutdown|halt"
 
 # Wyszukiwanie kont systemowych, które mają ustawione powłoki inne niż nologin lub false
 awk_command="\
-awk -F: '\$1!~/$excluded_accounts/ && \$3<$UID_MIN && \$7!~/((\\/usr)?\\/sbin\\/nologin)/ && \$7!~/(\\/bin)?\\/false/ {print}' /etc/passwd\
+awk -v excluded_accounts=\"$excluded_accounts\" -F: '(\$1!~excluded_accounts) && \$3<$UID_MIN && \$7!~/((\\/usr)?\\/sbin\\/nologin)/ && \$7!~/(\\/bin)?\\/false/ {print}' /etc/passwd\
 "
 
 awk_result=$(eval "$awk_command")

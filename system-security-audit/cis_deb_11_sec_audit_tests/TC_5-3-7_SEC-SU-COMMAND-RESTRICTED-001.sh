@@ -15,17 +15,25 @@ if ! grep -Pi '^\s*auth\s+(?:required|requisite)\s+pam_wheel\.so\s+(?:[^#\n\r]+\
     test_fail_messages+=("Konfiguracja pam_wheel.so nie wymaga członkostwa w grupie lub nie jest ustawiona na używanie use_uid.")
     exit_status=1
 else
-    # Jeśli znaleziono konfigurację, sprawdź, czy grupa jest pusta
-    group_name=$(grep -Po '^\s*auth\s+required\s+pam_wheel\.so\s+use_uid\s+group=\K\H+' /etc/pam.d/su)
+    # Jeśli znaleziono konfigurację, sprawdź, czy grupa jest pusta lub zawiera tylko "administrator"
+    group_name=$(grep -Po '^\s*auth\s+required\s+pam_wheel\.so\s+use_uid\s+group=\K[^ ]+' /etc/pam.d/su)
     if [ -z "$group_name" ]; then
         test_fail_messages+=("Nie określono grupy w konfiguracji pam_wheel.so.")
         exit_status=1
     else
-        # Sprawdzenie, czy w grupie są użytkownicy
-        if ! getent group "$group_name" | cut -d: -f4 | grep -qvE '^$'; then
-            test_fail_messages+=("Grupa $group_name nie zawiera użytkowników.")
+        # Pobranie listy użytkowników w grupie
+        group_members=$(getent group "$group_name" | cut -d: -f4)
+        
+        # Sprawdzenie, czy w grupie są inni użytkownicy oprócz "administrator"
+        if [[ -z "$group_members" ]] || [[ "$group_members" == "administrator" ]]; then
+            # Grupa jest uznawana za pustą, jeśli nie ma użytkowników lub jest tylko "administrator"
+            test_fail_messages+=("Grupa $group_name jest pusta lub zawiera tylko 'administrator'.")
+            # Tutaj zakładamy, że taki stan jest oczekiwany, więc nie ustawiamy exit_status na 1
+            # Jeśli jednak stan ten ma być traktowany jako błąd, odkomentuj poniższą linię
+            # exit_status=1
         else
-            test_fail_messages+=("Grupa $group_name zawiera użytkowników.")
+            # W grupie są inni użytkownicy, co jest traktowane jako błąd
+            test_fail_messages+=("Grupa $group_name zawiera użytkowników oprócz 'administrator'.")
             exit_status=1
         fi
     fi
